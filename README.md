@@ -167,6 +167,7 @@ utilizing this software.
 5. Changing the targeted repository and IP addresses requires manually editing the /etc/ansible/hosts file.  Although, learning to edit the hosts file also allows for modifying the ratio of database servers to web servers.
 6. Eval and SSH unencrypted plain text password tunnelling are used in this system.  Eval is shielded as best as I can; however, it is up to the user to disable password athentication and root login after the script copies the SSH keys over.
 7. Intense sleep deprivation may have resulted in very odd decisions with very odd effects to be determined.
+8. You attempt to use an SSH repo link for a repo you do not have SSH access to (or forgot to add the provided key when prompted to do so sometime before ansible floods the screen).  Just use https if you have the ability to for the sake of simplicity.
 
 In the case of the first issue, you can run the setup script under scripts/ to immediately run your playbook 
 instead of waiting on the cron job to catch back up.  Aside from that, the rest of the problems are rather niche
