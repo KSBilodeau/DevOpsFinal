@@ -128,8 +128,12 @@ else
 
 	echo
 	read -p "Enter the address to your online repository: " strRepoAddr
-
-	echo -e "\n[all:vars]\nrepo=$strRepoAddr\nserver_type=$strServerType" | sudo tee -a /etc/ansible/hosts >/dev/null 2>&1
+	
+	if [ $strServerType = "prod" ] ; then 
+		echo -e "\n[all:vars]\nrepo=$strRepoAddr\nserver_type=main" | sudo tee -a /etc/ansible/hosts >/dev/null 2>&1
+	else
+		echo -e "\n[all:vars]\nrepo=$strRepoAddr\nserver_type=$strServerType" | sudo tee -a /etc/ansible/hosts >/dev/null 2>&1
+	fi
 fi
 
 log "\nRunning ansible test run..."
