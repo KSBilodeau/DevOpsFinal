@@ -13,6 +13,7 @@
           name: apache2
           state: latest
       - name: Install NodeJS
+        apt:
           name: nodejs
           state: latest
       - name: Clone the repository
