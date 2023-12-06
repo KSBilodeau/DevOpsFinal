@@ -1,5 +1,5 @@
 ---
-  - name: Setup Testing Web Servers
+  - name: Setup Production Web Servers
     hosts: all
     become: yes
     tasks:
