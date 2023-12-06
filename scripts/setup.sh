@@ -1,20 +1,5 @@
 #!/usr/bin/env bash
 
-check_installation() {
-	if rpm -q $1 >/dev/null 2>&1 ; then
-		echo "$1 is installed"
-	else
-		echo "Ansible not found; Installing..."
-
-		if sudo yum install $1 -qy >/dev/null 2>&1 ; then
-			echo "$1 is installed"
-		else
-			echo "ABORT: $1 failed to install"
-			exit 1
-		fi
-	fi
-}
-
 log() {
 	echo -e $1
 	echo -e "$1" | sudo tee -a setup.log >/dev/null 2>&1
@@ -22,6 +7,21 @@ log() {
 
 log_no_print() {
 	echo -e "$1" | sudo tee -a setup.log >/dev/null 2>&1
+}
+
+check_installation() {
+	if rpm -q $1 >/dev/null 2>&1 ; then
+		log "$1 is installed"
+	else
+		log "$1 not found; Installing..."
+
+		if sudo yum install $1 -qy >/dev/null 2>&1 ; then
+			log "$1 is installed"
+		else
+			log "ABORT: $1 failed to install"
+			exit 1
+		fi
+	fi
 }
 
 # Mark date of execution in log
@@ -56,7 +56,7 @@ log "Checking for prior system configuration:"
 # Check if there are any IPs set in the ansible host file
 # (meaning this script has been run before)
 
-if sudo grep -qFx "[web$strServerType]" /etc/ansible/hosts >/dev/null 2>&1 ; then
+if sudo grep -q "web$strServerType" /etc/ansible/hosts >/dev/null 2>&1 ; then
 	log "Ansible configuration found!"
 else
 	# Configure ansible with my defaults for test/prod/dev
@@ -129,7 +129,7 @@ else
 	echo
 	read -p "Enter the address to your online repository: " strRepoAddr
 
-	echo -e "\n[all:vars]\nrepo_addr=$strRepoAddr" | sudo tee -a /etc/ansible/hosts >/dev/null 2>&1
+	echo -e "\n[all:vars]\nrepo=$strRepoAddr\nserver_type=$strServerType" | sudo tee -a /etc/ansible/hosts >/dev/null 2>&1
 fi
 
 log "\nRunning ansible test run..."
@@ -140,6 +140,19 @@ else
 	log "Ansible failed!"
 	exit 3
 fi
+
+log "\nRunning initial server playbook..."
+
+if ansible-playbook playbooks/manage_${strServerType}.yml ; then
+	log "Deployment playbook ran successfully!"
+else
+	log "Deployment playbook failed!"
+	exit 3
+fi
+
+# Cleanup log
+
+grep . setup.log | sudo tee setup.log >/dev/null 2>&1
 
 
 
