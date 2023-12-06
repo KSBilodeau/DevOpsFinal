@@ -1,5 +1,5 @@
 ---
-  - name: Setup Testing Web Servers
+  - name: Setup Development Web Servers
     hosts: all
     become: yes
     tasks:
@@ -23,7 +23,7 @@
           var: results.stdout
 
   - name: Setup Database Server
-    hosts: webtest2
+    hosts: webdev2
     tasks:
       - name: Install MariaDB
         apt:
