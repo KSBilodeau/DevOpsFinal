@@ -12,14 +12,17 @@
         apt:
           name: apache2
           state: latest
+      - name: Install NodeJS
+          name: nodejs
+          state: latest
       - name: Clone the repository
-        script: scripts/deploy.sh "{{ hostvars[inventory_hostname]['server_type'] }}" "{{ hostvars[inventory_hostname]['repo'] }}"
+        script: ../scripts/deploy.sh "{{ hostvars[inventory_hostname]['server_type'] }}" "{{ hostvars[inventory_hostname]['repo'] }}"
         register: results
       - debug:
           var: results.stdout
 
   - name: Setup Database Server
-    hosts: webtest2
+    hosts: webprod2
     tasks:
       - name: Install MariaDB
         apt:
