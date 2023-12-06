@@ -1,0 +1,73 @@
+Deployment playbook ran successfully!
+DATE OF EXECUTION: 2023-12-06 13:24:01
+DATE OF EXECUTION: 2023-12-06 13:24:01
+Checking for necessary packages:
+Checking for necessary packages:
+ansible is installed
+ansible is installed
+git is installed
+git is installed
+All packages installed!
+All packages installed!
+Server type acquired: test
+Server type acquired: test
+Checking for prior system configuration:
+Checking for prior system configuration:
+Ansible configuration found!
+Ansible configuration found!
+Running ansible test run...
+Running ansible test run...
+Ansible ran successfully!
+Ansible ran successfully!
+Running initial server playbook...
+Running initial server playbook...
+Deployment playbook ran successfully!
+Deployment playbook ran successfully!
+DATE OF EXECUTION: 2023-12-06 13:25:01
+DATE OF EXECUTION: 2023-12-06 13:25:01
+Checking for necessary packages:
+Checking for necessary packages:
+ansible is installed
+ansible is installed
+git is installed
+git is installed
+All packages installed!
+All packages installed!
+Server type acquired: test
+Server type acquired: test
+Checking for prior system configuration:
+Checking for prior system configuration:
+Ansible configuration found!
+Ansible configuration found!
+Running ansible test run...
+Running ansible test run...
+Ansible ran successfully!
+Ansible ran successfully!
+Running initial server playbook...
+Running initial server playbook...
+Deployment playbook ran successfully!
+Deployment playbook ran successfully!
+DATE OF EXECUTION: 2023-12-06 13:26:01
+DATE OF EXECUTION: 2023-12-06 13:26:01
+Checking for necessary packages:
+Checking for necessary packages:
+ansible is installed
+ansible is installed
+git is installed
+git is installed
+All packages installed!
+All packages installed!
+Server type acquired: test
+Server type acquired: test
+Checking for prior system configuration:
+Checking for prior system configuration:
+Ansible configuration found!
+Ansible configuration found!
+Running ansible test run...
+Running ansible test run...
+Ansible ran successfully!
+Running initial server playbook...
+Ansible ran successfully!
+Running initial server playbook...
+Deployment playbook ran successfully!
+Deployment playbook ran successfully!
