@@ -168,6 +168,7 @@ utilizing this software.
 6. Eval and SSH unencrypted plain text password tunnelling are used in this system.  Eval is shielded as best as I can; however, it is up to the user to disable password athentication and root login after the script copies the SSH keys over.
 7. Intense sleep deprivation may have resulted in very odd decisions with very odd effects to be determined.
 8. You attempt to use an SSH repo link for a repo you do not have SSH access to (or forgot to add the provided key when prompted to do so sometime before ansible floods the screen).  Just use https if you have the ability to for the sake of simplicity.
+9. Your website repo branches do not follow a main, dev, test format. The scripts assume by selecting a specific target, you have a specific version of your page you would like to attach.  If not, prod maps to main so just use that instead.
 
 In the case of the first issue, you can run the setup script under scripts/ to immediately run your playbook 
 instead of waiting on the cron job to catch back up.  Aside from that, the rest of the problems are rather niche
