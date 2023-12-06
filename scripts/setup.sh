@@ -88,6 +88,13 @@ else
 		fi
 	fi
 
+	log "An SSH key was generated to assist you."
+	log "Please enter the following into your online repo provider's SSH key entry system:"
+
+	cat ~/.ssh/id_ed25519.pub
+
+	echo
+
 	# Get the IPs that are to be managed
 
 	read -p "Enter the internal IPs to be managed as a space separated list: " strIpAddrs
@@ -98,17 +105,14 @@ else
 
 	arrIpAddrs=( $strIpAddrs )
 
-	# Prep the hosts file to have the IP addrs appended
-
-	echo -e "\n[web$strServerType]\n" | sudo tee -a /etc/ansible/hosts >/dev/null 2>&1
-
 	i=1
 	for ip in ${arrIpAddrs[@]} ; do
 		log $ip
 
 		# Append each IP address to the host file
 
-		echo "root@$ip" | sudo tee -a /etc/ansible/hosts >/dev/null 2>&1
+		echo -e "\n[web${strServerType}${i}]\nroot@$ip" | sudo tee -a /etc/ansible/hosts >/dev/null 2>&1
+		i=$(( $i + 1 ))
 	done
 
 	# Copy the keys to the servers
@@ -117,7 +121,15 @@ else
 
 	for ip in ${arrIpAddrs[@]} ; do
 		ssh-copy-id -i ~/.ssh/id_ed25519 root@$ip
+		scp ~/.ssh/id_ed25519 root@$ip:~/.ssh
+		scp ~/.ssh/id_ed25519.pub root@$ip:~/.ssh
+		ssh root@$ip 'eval "$(ssh-agent -s)" && ssh-add ~/.ssh/id_ed25519'
 	done
+
+	echo
+	read -p "Enter the address to your online repository: " strRepoAddr
+
+	echo -e "\n[all:vars]\nrepo_addr=$strRepoAddr" | sudo tee -a /etc/ansible/hosts >/dev/null 2>&1
 fi
 
 log "\nRunning ansible test run..."
